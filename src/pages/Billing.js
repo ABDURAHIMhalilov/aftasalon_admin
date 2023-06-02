@@ -611,8 +611,7 @@ import React, { useState, useEffect } from 'react';
 import url from '../components/host';
 import './style/Billing.css'
 import { AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
-
-
+import { Tabs } from 'antd';
 
 
 export default function Billing() {
@@ -622,11 +621,19 @@ export default function Billing() {
   //  { headers: { 'Authorization': 'Bearer ' + sessionStorage.getItem("token") } }
   useEffect(() => {
     axios.get(`${url}/auth/users/`, { headers: { 'Authorization': 'Bearer ' + sessionStorage.getItem("token") } }).then(res => {
-      setData(res.data)
-      setData2(res.data)
-      console.log(res.data, 'success');
-    }).catch(err => {
-      console.log(err, 'error')
+      var tt = []
+      var dd = []
+      res.data.map(item => {
+        if (item.is_staff == true) {
+          tt.push(item)
+        }
+      })
+      setData(tt)
+      //   setData(res.data)
+      //   console.log(res.data, 'success');
+      // }).catch(err => {
+      //   console.log(err, 'error')
+      // })
     })
   }, [])
 
@@ -639,16 +646,17 @@ export default function Billing() {
 
   const columns = [
     {
+      
       title: 'ID',
-      dataIndex: 'id',
+      dataIndex: `$ {data.id}`,
     },
     {
       title: 'Name',
-      dataIndex: 'username',
+      dataIndex: 'data.username',
     },
     {
       title: 'Phone',
-      dataIndex: 'phone',
+      dataIndex: data.phone,
     },
     {
       title: 'Delete',
@@ -660,26 +668,26 @@ export default function Billing() {
 
 
 
-  const columns2 = [
-    {
-      title: 'ID',
-      dataIndex: 'id',
-    },
-    {
-      title: 'Name',
-      dataIndex: 'username',
-    },
-    {
-      title: 'Phone',
-      dataIndex: 'phone',
-    },
-    {
-      title: 'Delete',
-      render: () => (
-        <Button type="danger" className='delte'>Delete</Button>
-      ),
-    },
-  ];
+  // const columns2 = [
+  //   {
+  //     title: 'ID',
+  //     dataIndex: data2.id,
+  //   },
+  //   {
+  //     title: 'Name',
+  //     dataIndex: data2.username,
+  //   },
+  //   {
+  //     title: 'Phone',
+  //     dataIndex: data2.phone,
+  //   },
+  //   {
+  //     title: 'Delete',
+  //     render: () => (
+  //       <Button type="danger" className='delte'>Delete</Button>
+  //     ),
+  //   },
+  // ];
 
   function ModalPost() {
     document.querySelector('.ModalPost').style = 'top: 200px'
@@ -704,16 +712,30 @@ export default function Billing() {
     })
   }
 
-  function postoyna11() {
-    axios.get(`${url}/auth/register/`, { headers: { 'Authorization': 'Bearer ' + sessionStorage.getItem}}).then(res => {
-      console.log(res.data, 'hello');
-    })
-    }
-
 
 
   // <Button onClick={() => postoyna11(fueldata)} style={{ background: 'orange', color: 'white' }} type="button">O'zgartirish</Button>
 
+
+  const onChange = (key) => {
+    console.log(key);
+  };
+  const items = [
+    {
+      key: '1',
+      label: `Tab 1`,
+      children:
+        <Table columns={columns} pagination={{ pageSize: 10 }} dataSource={data} />
+      ,
+    },
+    {
+      key: '2',
+      label: `Tab 2`,
+      children: `hello`
+        // <Table columns={columns2} pagination={{ pageSize: 10 }} dataSource={data2} />
+      ,
+    }
+  ];
 
   return (
     <div>
@@ -741,9 +763,7 @@ export default function Billing() {
           }
         })
       } */}
-      <button onClick={() => postoyna11()}>succes</button>
-      <Table columns={columns} pagination={{ pageSize: 10 }} dataSource={data} />
-      {/* <Table columns={columns2} pagination={{ pageSize: 10 }} dataSource={data2} /> */}
+      <Tabs defaultActiveKey="1" items={items} onChange={onChange} />;
     </div>
   )
 }
