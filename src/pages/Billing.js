@@ -644,15 +644,15 @@ export default function Billing() {
     {
 
       title: 'ID',
-      dataIndex: `data.id`,
+      dataIndex: `id`,
     },
     {
       title: 'Name',
-      dataIndex: 'data.username',
+      dataIndex: 'username',
     },
     {
       title: 'Phone',
-      dataIndex: data.phone,
+      dataIndex: 'phone',
     },
     {
       title: 'Delete',
@@ -728,7 +728,7 @@ export default function Billing() {
       key: '2',
       label: `Tab 2`,
       children: `hello`
-      // <Table columns={columns2} pagination={{ pageSize: 10 }} dataSource={data2} />
+      <Table columns={columns2} pagination={{ pageSize: 10 }} dataSource={data2} />
       ,
     }
   ];
