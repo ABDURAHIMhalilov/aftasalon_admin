@@ -609,14 +609,21 @@ import { Button, Table } from 'antd';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import url from '../components/host';
+import './style/Billing.css'
+import { AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
+
+
+
 
 export default function Billing() {
   const [data, setData] = useState([])
+  const [data2, setData2] = useState([])
 
-//  { headers: { 'Authorization': 'Bearer ' + sessionStorage.getItem("token") } }
+  //  { headers: { 'Authorization': 'Bearer ' + sessionStorage.getItem("token") } }
   useEffect(() => {
     axios.get(`${url}/auth/users/`, { headers: { 'Authorization': 'Bearer ' + sessionStorage.getItem("token") } }).then(res => {
       setData(res.data)
+      setData2(res.data)
       console.log(res.data, 'success');
     }).catch(err => {
       console.log(err, 'error')
@@ -644,17 +651,99 @@ export default function Billing() {
       dataIndex: 'phone',
     },
     {
-      title: 'Edit',
+      title: 'Delete',
       render: () => (
-        <Button type="primary">Edit</Button>
+        <Button type="danger" className='delte'>Delete</Button>
       ),
     },
   ];
 
+
+
+  const columns2 = [
+    {
+      title: 'ID',
+      dataIndex: 'id',
+    },
+    {
+      title: 'Name',
+      dataIndex: 'username',
+    },
+    {
+      title: 'Phone',
+      dataIndex: 'phone',
+    },
+    {
+      title: 'Delete',
+      render: () => (
+        <Button type="danger" className='delte'>Delete</Button>
+      ),
+    },
+  ];
+
+  function ModalPost() {
+    document.querySelector('.ModalPost').style = 'top: 200px'
+  }
+
+
+  function ModalPostClose() {
+    document.querySelector('.ModalPost').style = 'top: -100%'
+  }
+
+  function PostUser() {
+    var data = new FormData()
+    data.append('username', document.querySelector('.username').value)
+    data.append('phone', document.querySelector('.phone').value)
+    data.append('password', document.querySelector('.password').value)
+    data.append('is_staff', true)
+    axios.post(`${url}/auth/register/`, data, { headers: { 'Authorization': 'Bearer ' + sessionStorage.getItem("token") } }).then(res => {
+      alert('Post user')
+      window.location.reload()
+    }).catch(err => {
+      alert(err)
+    })
+  }
+
+  function postoyna11() {
+    axios.get(`${url}/auth/register/`, { headers: { 'Authorization': 'Bearer ' + sessionStorage.getItem}}).then(res => {
+      console.log(res.data, 'hello');
+    })
+    }
+
+
+
+  // <Button onClick={() => postoyna11(fueldata)} style={{ background: 'orange', color: 'white' }} type="button">O'zgartirish</Button>
+
+
   return (
     <div>
-
-      <Table columns={columns} pagination={{ pageSize: 10}} dataSource={data} />
+      <div className='ModalPost'>
+        <AiOutlineClose className='iconClose' onClick={() => ModalPostClose()} />
+        <h3>Ism</h3>
+        <input type='text' className='username' />
+        <h3>Nomer</h3>
+        <input type='number' className='phone' />
+        <h3>Parol</h3>
+        <input type='password' className='password' />
+        <div className='chekDv'>
+          <h3>admin or user</h3>
+          <input type='checkbox' className='chekInp' />
+        </div>
+        <button className='Btn2' onClick={() => PostUser()}>Odam Qo'shish</button>
+      </div>
+      <button className='Btn1' style={{ transition: '.4s' }} onClick={() => ModalPost()} >Odam Qo'shish</button>
+      {/* {
+        data.map(item => {
+          if (item.is_staff) {
+            return <h1>truee</h1>
+          } else {
+            return <h1>falsee</h1>
+          }
+        })
+      } */}
+      <button onClick={() => postoyna11()}>succes</button>
+      <Table columns={columns} pagination={{ pageSize: 10 }} dataSource={data} />
+      {/* <Table columns={columns2} pagination={{ pageSize: 10 }} dataSource={data2} /> */}
     </div>
   )
 }

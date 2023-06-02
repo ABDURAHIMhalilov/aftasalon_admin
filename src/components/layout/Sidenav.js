@@ -184,7 +184,7 @@ function Sidenav({ color }) {
             >
               {billing}
             </span>
-            <span className="label">All Users</span>
+            <span className="label">All Admin</span>
           </NavLink>
         </Menu.Item>
          <Menu.Item className="menu-item-header" key="5">
