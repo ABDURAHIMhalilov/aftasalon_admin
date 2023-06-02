@@ -629,11 +629,7 @@ export default function Billing() {
         }
       })
       setData(tt)
-      //   setData(res.data)
-      //   console.log(res.data, 'success');
-      // }).catch(err => {
-      //   console.log(err, 'error')
-      // })
+      console.log(tt);
     })
   }, [])
 
@@ -646,9 +642,9 @@ export default function Billing() {
 
   const columns = [
     {
-      
+
       title: 'ID',
-      dataIndex: `$ {data.id}`,
+      dataIndex: `data.id`,
     },
     {
       title: 'Name',
@@ -732,7 +728,7 @@ export default function Billing() {
       key: '2',
       label: `Tab 2`,
       children: `hello`
-        // <Table columns={columns2} pagination={{ pageSize: 10 }} dataSource={data2} />
+      // <Table columns={columns2} pagination={{ pageSize: 10 }} dataSource={data2} />
       ,
     }
   ];
