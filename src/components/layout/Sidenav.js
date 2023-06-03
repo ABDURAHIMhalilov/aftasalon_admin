@@ -203,7 +203,7 @@ function Sidenav({ color }) {
             <span className="label">Profile</span>
           </NavLink>
         </Menu.Item>
-        <Menu.Item key="6">
+        {/* <Menu.Item key="6">
           <NavLink to="/sign-in">
             <span className="icon">{signin}</span>
             <span className="label">Sign In</span>
@@ -214,7 +214,7 @@ function Sidenav({ color }) {
             <span className="icon">{signup}</span>
             <span className="label">Sign Up</span>
           </NavLink>
-        </Menu.Item>
+        </Menu.Item> */}
       </Menu>
       
     </>
