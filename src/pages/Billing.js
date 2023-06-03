@@ -620,15 +620,19 @@ export default function Billing() {
 
   //  { headers: { 'Authorization': 'Bearer ' + sessionStorage.getItem("token") } }
   useEffect(() => {
-    axios.get(`${url}/auth/users/`, { headers: { 'Authorization': 'Bearer ' + sessionStorage.getItem("token") } }).then(res => {
+    axios.get(`${url}/auth/user/`, { headers: { 'Authorization': 'Bearer ' + sessionStorage.getItem("token") } }).then(res => {
       var tt = []
+      console.log(res.data);
       var dd = []
       res.data.map(item => {
         if (item.is_staff == true) {
           tt.push(item)
+        } else {
+          dd.push(item)
         }
       })
       setData(tt)
+      setData2(dd)
       console.log(tt);
     })
   }, [])
@@ -656,34 +660,34 @@ export default function Billing() {
     },
     {
       title: 'Delete',
-      render: () => (
-        <Button type="danger" className='delte'>Delete</Button>
+      render: (data) => (
+        <Button onClick={() => deleteData(data.id)} type="danger" className='delte'>Delete</Button>
       ),
     },
   ];
 
 
 
-  // const columns2 = [
-  //   {
-  //     title: 'ID',
-  //     dataIndex: data2.id,
-  //   },
-  //   {
-  //     title: 'Name',
-  //     dataIndex: data2.username,
-  //   },
-  //   {
-  //     title: 'Phone',
-  //     dataIndex: data2.phone,
-  //   },
-  //   {
-  //     title: 'Delete',
-  //     render: () => (
-  //       <Button type="danger" className='delte'>Delete</Button>
-  //     ),
-  //   },
-  // ];
+   const columns2 = [
+     {
+       title: 'ID',
+       dataIndex: 'id',
+     },
+     {
+       title: 'Name',
+       dataIndex: 'username',
+     },
+     {
+       title: 'Phone',
+       dataIndex: 'phone',
+     },
+     {
+       title: 'Delete',
+       render: (data2) => (
+         <Button onClick={() => deleteData(data2.id)} type="danger" className='delte'>Delete</Button>
+       ),
+     },
+   ];
 
   function ModalPost() {
     document.querySelector('.ModalPost').style = 'top: 200px'
@@ -695,12 +699,12 @@ export default function Billing() {
   }
 
   function PostUser() {
-    var data = new FormData()
-    data.append('username', document.querySelector('.username').value)
-    data.append('phone', document.querySelector('.phone').value)
-    data.append('password', document.querySelector('.password').value)
-    data.append('is_staff', true)
-    axios.post(`${url}/auth/register/`, data, { headers: { 'Authorization': 'Bearer ' + sessionStorage.getItem("token") } }).then(res => {
+    var dataPost = new FormData()
+    dataPost.append('username', document.querySelector('.username').value)
+    dataPost.append('phone', document.querySelector('.phone').value)
+    dataPost.append('password', document.querySelector('.password').value)
+    dataPost.append('is_staff', true)
+    axios.post(`${url}/auth/register/`, dataPost, { headers: { 'Authorization': 'Bearer ' + sessionStorage.getItem("token") } }).then(res => {
       alert('Post user')
       window.location.reload()
     }).catch(err => {
@@ -719,19 +723,25 @@ export default function Billing() {
   const items = [
     {
       key: '1',
-      label: `Tab 1`,
+      label: `Admins`,
       children:
         <Table columns={columns} pagination={{ pageSize: 10 }} dataSource={data} />
       ,
     },
     {
       key: '2',
-      label: `Tab 2`,
-      children: `hello`
+      label: `Users`,
+      children:
       <Table columns={columns2} pagination={{ pageSize: 10 }} dataSource={data2} />
       ,
     }
   ];
+
+  function deleteData(key) {
+    axios.delete(`${url}/auth/users/${key}/`, { headers: { 'Authorization': 'Bearer ' + sessionStorage.getItem("token")}}).then (res => {
+      alert('Delete user')
+    })
+  }
 
   return (
     <div>
