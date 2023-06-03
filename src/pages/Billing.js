@@ -740,6 +740,7 @@ export default function Billing() {
   function deleteData(key) {
     axios.delete(`${url}/auth/users/${key}/`, { headers: { 'Authorization': 'Bearer ' + sessionStorage.getItem("token")}}).then (res => {
       alert('Delete user')
+      window.location.reload()
     })
   }
 
@@ -753,13 +754,9 @@ export default function Billing() {
         <input type='number' className='phone' />
         <h3>Parol</h3>
         <input type='password' className='password' />
-        <div className='chekDv'>
-          <h3>admin or user</h3>
-          <input type='checkbox' className='chekInp' />
-        </div>
-        <button className='Btn2' onClick={() => PostUser()}>Odam Qo'shish</button>
+        <button className='Btn2' onClick={() => PostUser()}>Admin Qo'shish</button>
       </div>
-      <button className='Btn1' style={{ transition: '.4s' }} onClick={() => ModalPost()} >Odam Qo'shish</button>
+      <button className='Btn1' style={{ transition: '.4s' }} onClick={() => ModalPost()} >Admin Qo'shish</button>
       {/* {
         data.map(item => {
           if (item.is_staff) {
