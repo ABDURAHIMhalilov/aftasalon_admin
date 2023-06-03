@@ -144,18 +144,6 @@ export default class SignUp extends Component {
                     <span>Profile</span>
                   </Link>
                 </Menu.Item>
-                <Menu.Item key="3">
-                  <Link to="/sign-up">
-                    {signup}
-                    <span> Sign Up</span>
-                  </Link>
-                </Menu.Item>
-                <Menu.Item key="4">
-                  <Link to="/sign-in">
-                    {signin}
-                    <span> Sign In</span>
-                  </Link>
-                </Menu.Item>
               </Menu>
             </div>
             <div className="header-col header-btn">
